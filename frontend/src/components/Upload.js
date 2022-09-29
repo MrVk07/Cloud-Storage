@@ -7,13 +7,16 @@ function Upload() {
     const handleFileInputChange = (e) => {
         // console.log("2");
         const file = e.target.files[0]
-        // console.log(file)
-        // previewFile(file)
-        const reader = new FileReader()
-        reader.readAsDataURL(file)
-        reader.onloadend = () => {
-            setdataOfFile({ ...dataOfFile, FileUrl: reader.result, id: uuidv4() })
-            // console.log(dataOfFile.FileUrl)
+        // console.log(file.name)
+        console.log(file.name.slice(-3))
+        if (file.name.slice(-3) === "jpg" || file.name.slice(-3) === "png" || file.name.slice(-3) === "gif") {
+            // previewFile(file)
+            const reader = new FileReader()
+            reader.readAsDataURL(file)
+            reader.onloadend = () => {
+                setdataOfFile({ ...dataOfFile, FileUrl: reader.result, id: uuidv4() })
+                // console.log(dataOfFile.FileUrl)
+            }
         }
     }
 
@@ -39,7 +42,7 @@ function Upload() {
     }
 
     const handleData = (e) => {
-        setdataOfFile({ ...dataOfFile, [e.target.id]: e.target.value })
+        setdataOfFile({ ...dataOfFile, [e.target.id]: JSON.stringify(e.target.value) })
     }
 
     return (
