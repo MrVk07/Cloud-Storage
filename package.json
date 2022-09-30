@@ -1,0 +1,25 @@
+{
+  "name": "cloudinary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd backend && npm install  && cd ../frontend && npm install && npm run build",
+    "start": "node backend/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrVk07/Cloud-Storage.git"
+  },
+  "keywords": [
+    "Cloud storage",
+    "cloudinary",
+    "upload photos in cloud"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrVk07/Cloud-Storage/issues"
+  },
+  "homepage": "https://github.com/MrVk07/Cloud-Storage#readme"
+}

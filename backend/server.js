@@ -5,17 +5,24 @@ import cors from 'cors'
 import cloudinary from './utils/cloudinary.js'
 import connectToMongo from './db.js'
 import FileRoute from './routes/AddFileRoute.js'
+import path from 'path'
 
 dotenv.config()
 const app = express()
 app.use(cors());
+app.options('*', cors());
 connectToMongo()
 
 const port = process.env.PORT || 5000
 
 app.use(bodyParser.json({ limit: '50mb' }))
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
+app.use(bodyParser.urlencoded({ extended: true }))
 
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, '/frontend/build')));
+app.get('*', (req, res) =>
+    res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
+);
 
 app.get('/api/images', async (req, res) => {
     const { resources } = await cloudinary.search

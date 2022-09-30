@@ -27,13 +27,18 @@ function Gallery() {
                                         <h5 className="card-title">{file.title}</h5>
                                         <p className="card-text">{file.description}</p>
                                         <button className='btn btn-primary' onClick={async () => {
+                                            setLoading(true)
                                             let res = await axios.delete(`/api/delete/${file.id}`)
                                             console.log(res);
-                                            let newarr = allfiles.filter((item) => item.id !== file.id)
-                                            setAllfiles(newarr)
+                                            if (res.data.msg === "deleted") {
+                                                let newarr = allfiles.filter((item) => item.id !== file.id)
+                                                setAllfiles(newarr)
+                                                setLoading(false)
+                                            }
                                         }}>Delete</button>
                                     </div>
                                 </div>
+
                             })}
                         </div>)}
 

@@ -23,5 +23,5 @@ const FileSchema = new Schema({
         default: Date.now
     }
 })
-const file = mongoose.model('File', FileSchema);
+const file = mongoose.model('FileSchema', FileSchema);
 export default file;

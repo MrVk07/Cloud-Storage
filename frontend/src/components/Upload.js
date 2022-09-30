@@ -1,9 +1,13 @@
 import axios from 'axios'
 import { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from "react-router-dom";
+
 
 function Upload() {
+    const navigate = useNavigate();
     const [dataOfFile, setdataOfFile] = useState({ id: "", title: "", description: "", FileUrl: "" })
+    const [loading, setLoading] = useState(false)
     const handleFileInputChange = (e) => {
         // console.log("2");
         const file = e.target.files[0]
@@ -25,24 +29,31 @@ function Upload() {
             console.log("returning without submit");
             return
         }
+        setLoading(true)
         // console.log(dataOfFile)
         // console.log(dataOfFile.FileUrl)
-        uploadImage()
+        const res = await uploadImage()
         console.log("success");
         setdataOfFile({ id: "", title: "", description: "", FileUrl: "" })
+        console.log(res)
+        if (res.data.msg === "success") {
+            setLoading(false)
+            navigate("/gallery");
+        }
+
     }
 
     const uploadImage = async () => {
         try {
-            await axios.post('/api/upload', { dataOfFile })
-            return
+            const res = await axios.post('/api/upload', { dataOfFile })
+            return res
         } catch (error) {
             console.error(error)
         }
     }
 
     const handleData = (e) => {
-        setdataOfFile({ ...dataOfFile, [e.target.id]: JSON.stringify(e.target.value) })
+        setdataOfFile({ ...dataOfFile, [e.target.id]: e.target.value })
     }
 
     return (
@@ -66,8 +77,9 @@ function Upload() {
             </div>
             <button className='btn btn-primary' disabled={dataOfFile.title.length < 5 || dataOfFile.description.length < 5} onClick={handleSubmitFile}>Submit</button>
             {dataOfFile.FileUrl &&
-                <img src={dataOfFile.FileUrl} alt="file" style={{ height: '300px' }} />
+                <img src={dataOfFile.FileUrl} alt="file" style={{ height: '150px' }} />
             }
+            {loading ? <h3>Loading...</h3> : <h3></h3>}
         </>
     )
 }

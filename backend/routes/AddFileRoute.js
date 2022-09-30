@@ -18,7 +18,7 @@ router.post('/upload', async (req, res) => {
         })
         const savedFile = await newfile.save()
         console.log(savedFile)
-        res.send("success")
+        res.send({ msg: "success" })
     } catch (error) {
         console.error(error)
     }
@@ -59,7 +59,7 @@ router.delete('/delete/:id', (req, res) => {
                 if (docs == null) {
                     res.send("Wrong id")
                 } else {
-                    res.send(docs)
+                    res.send({ msg: "deleted" })
                 }
             }
         })
