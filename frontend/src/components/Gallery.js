@@ -3,25 +3,30 @@ import axios from 'axios'
 
 
 function Gallery() {
-    const [allfiles, setAllfiles] = useState({})
+    const [allfiles, setAllfiles] = useState([])
     const [loading, setLoading] = useState(true)
     useEffect(() => {
-        axios.get('/api/getallfiles').then((resp) => resp.data).then((data) => {
-            setAllfiles(data)
-            setLoading(false)
-        })
-        console.log(allfiles);
+        try {
+            axios.get('/api/getallfiles').then((resp) => resp.data).then((data) => {
+                setAllfiles(data)
+                setLoading(false)
+            })
+            console.log(allfiles);
+        } catch (error) {
+            console.log(error);
+        }
+
     }, []);
 
     return (
         <>
             <div className="container">
                 {loading
-                    ? <h1>loading</h1>
+                    ? <h1 className='mt-3 text-center'><b>Loading</b></h1>
                     : (allfiles.length === 0 ? <h2 className='mt-3 text-center'><b>No files to display</b></h2>
                         : <div className="row mx-auto">
                             {allfiles.map((file) => {
-                                return <div className="card" style={{ width: "18rem" }} key={file.id}>
+                                return <div className="card" style={{ width: "18rem", margin: "0.6rem 0.6rem 0.6rem " }} key={file.id}>
                                     <img className="card-img-top" src={file.urlOfFile} alt="File" />
                                     <div className="card-body">
                                         <h5 className="card-title">{file.title}</h5>

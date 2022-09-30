@@ -26,9 +26,8 @@ router.post('/upload', async (req, res) => {
 
 router.get('/getallfiles', async (req, res) => {
     try {
-        file.find().then(foundFiles => {
-            res.json(foundFiles)
-        })
+        let foundFiles = await file.find()
+        res.json(foundFiles)
     } catch (error) {
         console.log(error)
     }
