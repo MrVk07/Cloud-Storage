@@ -36,7 +36,7 @@ router.get('/getallfiles', async (req, res) => {
 router.delete('/delete/:id', async (req, res) => {
     try {
         let idOfFile = req.params.id
-        let deletefile = await file.findOne({ id: idOfFile }, (error, data) => {
+        await file.findOneAndDelete({ id: idOfFile }, (error, data) => {
             if (error) {
                 console.log(error);
             }
@@ -48,21 +48,9 @@ router.delete('/delete/:id', async (req, res) => {
                 const deleteresponse = cloudinary.uploader.destroy(delstring, function (error, result) {
                     console.log(result, error)
                 })
+                res.send({ msg: "deleted" })
             }
         })
-        await file.findOneAndDelete(({ id: idOfFile }), function (err, docs) {
-            if (err) {
-                console.log(err);
-                res.send(err)
-            } else {
-                if (docs == null) {
-                    res.send("Wrong id")
-                } else {
-                    res.send({ msg: "deleted" })
-                }
-            }
-        })
-
     } catch (error) {
         console.log(error)
     }
