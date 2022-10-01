@@ -14,6 +14,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/gallery' element={<Gallery />} />
+        <Route path='/' element={<Gallery />} />
         <Route path='/Upload' element={<Upload />} />
       </Routes>
     </Router>
