@@ -33,10 +33,10 @@ router.get('/getallfiles', async (req, res) => {
     }
 })
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     try {
         let idOfFile = req.params.id
-        let deletefile = file.findOne({ id: idOfFile }, (error, data) => {
+        let deletefile = await file.findOne({ id: idOfFile }, (error, data) => {
             if (error) {
                 console.log(error);
             }
@@ -50,7 +50,7 @@ router.delete('/delete/:id', (req, res) => {
                 })
             }
         })
-        file.findOneAndDelete(({ id: idOfFile }), function (err, docs) {
+        await file.findOneAndDelete(({ id: idOfFile }), function (err, docs) {
             if (err) {
                 console.log(err);
                 res.send(err)
