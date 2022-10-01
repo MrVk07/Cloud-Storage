@@ -44,8 +44,7 @@ router.delete('/delete/:id', async (req, res) => {
                 let str1 = data.urlOfFile
                 let delstringarr = str1.split('/')
                 let delstring = delstringarr[delstringarr.length - 1].slice(0, -4)
-                // console.log(delstring, "stirng");
-                const deleteresponse = cloudinary.uploader.destroy(delstring, function (error, result) {
+                cloudinary.uploader.destroy(delstring, function (error, result) {
                     console.log(result, error)
                 })
                 res.send({ msg: "deleted" })
